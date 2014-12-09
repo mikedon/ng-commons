@@ -1,0 +1,13 @@
+{
+  "name": "ng-commons",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mikedon/ng-commons",
+  "authors": [
+    "mikedon <mikedonovan1987@gmail.com>"
+  ],
+  "description": "commong angular modules",
+  "devDependencies": {
+    "angular": "~1.3.6",
+    "angular-mocks": "~1.3.6"
+  }
+}

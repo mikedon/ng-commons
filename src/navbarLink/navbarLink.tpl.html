@@ -1,0 +1,4 @@
+<li ng-show="show()" ng-class="{'active': active}">
+    <a ng-if="!isAction" class="navbar-link" ng-href="{{href}}">{{label}}</a>
+    <a ng-if="isAction" class="navbar-link" href="#" ng-click="click()">{{label}}</a>
+</li>

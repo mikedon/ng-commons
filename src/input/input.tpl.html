@@ -1,0 +1,8 @@
+<div class="form-group" ng-class="{'has-error':isError && showErrors}">
+    <label ng-show="showLabel" class="control-label" for="{{for}}">{{label}}</label>
+    <div ng-show="showErrors">
+        <div ng-show="isRequiredError">{{requiredMsg}}</div>
+        <div ng-show="isError">{{validationMsg}}</div>
+    </div>
+    <div ng-transclude></div>
+</div>
