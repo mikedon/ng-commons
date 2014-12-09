@@ -3,7 +3,7 @@
  */
 angular.module('ng-commons', [])
 
-.directive("loading", ["$modal",
+.directive("ngcLoading", ["$modal",
     function($modal){
         return {
             scope: {

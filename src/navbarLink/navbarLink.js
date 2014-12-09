@@ -1,5 +1,5 @@
 angular.module('ng-commons',[])
-.directive('navbarLink', ["$location",
+.directive('ngcNavbarLink', ["$location",
     function($location){
         return {
             restrict: "E",

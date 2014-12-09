@@ -8,7 +8,7 @@ describe("directive: input",  function() {
         scope = $rootScope.$new();
 
         element =
-            '<form name="testForm"><div bs-input label="Test Label" required-msg="Value is required"> ' +
+            '<form name="testForm"><div ngc-input label="Test Label" required-msg="Value is required"> ' +
             '   <input type="text"' +
             '       name="testName"' +
             '       id="testId"' +

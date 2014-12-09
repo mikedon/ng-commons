@@ -1,5 +1,5 @@
 angular.module('ng-commons',[])
-.directive('navbar', function(){
+.directive('ngcNavbar', function(){
    return {
        restrict: "E",
        replace: true,

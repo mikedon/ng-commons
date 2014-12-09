@@ -1,5 +1,5 @@
 angular.module('ng-commons', [])
-.directive("bsInput", function(){
+.directive("ngcInput", function(){
 	return {
 		restrict: "A",
         require: "^form",
