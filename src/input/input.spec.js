@@ -1,7 +1,7 @@
 describe("directive: input",  function() {
     var element, scope;
 
-    beforeEach(module('input'));
+    beforeEach(module('ng-commons'));
     beforeEach(module('input/input.tpl.html'));
 
     beforeEach(inject(function($rootScope, $compile) {

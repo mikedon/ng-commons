@@ -1,4 +1,4 @@
-angular.module('input', [])
+angular.module('ng-commons', [])
 .directive("bsInput", function(){
 	return {
 		restrict: "A",
