@@ -2,7 +2,9 @@ module.exports = function(grunt){
 
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-html2js');
   	grunt.loadNpmTasks('grunt-karma');
 
@@ -85,6 +87,26 @@ module.exports = function(grunt){
           			'<%= html2js.tpls.dest %>'
         		]
       		}
+		},
+		pkg: grunt.file.readJSON("package.json"),
+		concat : {
+      		compile_js: {
+        		src: [ 
+          			'<%= build_dir %>/src/**/*.js',
+          			'<%= html2js.tpls.dest %>', 
+        		],
+        		dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+      		}
+		},
+		uglify: {
+      		compile: {
+        		//options: {
+          		//	banner: '<%= meta.banner %>'
+        		//},
+        		files: {
+          			'<%= concat.compile_js.dest %>': '<%= concat.compile_js.dest %>'
+        		}
+      		}
 		}
 	};
 	grunt.initConfig( grunt.util._.extend(taskConfig));
@@ -94,7 +116,7 @@ module.exports = function(grunt){
     	'clean', 'html2js', 'jshint', 'copy:build_js', 'karmaconfig', 'karma:continuous' 
   	]);
   	grunt.registerTask('compile', [
-    	'ngmin', 'concat:compile_js', 'uglify'
+    	'concat:compile_js', 'uglify'
   	]);
 
 	/**
