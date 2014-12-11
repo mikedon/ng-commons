@@ -1,4 +1,4 @@
-angular.module('ng-commons',[])
+angular.module('ng-commons.navbar',[])
 .directive('ngcNavbar', function(){
    return {
        restrict: "E",

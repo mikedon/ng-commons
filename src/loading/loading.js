@@ -1,7 +1,7 @@
 /**
  * directive that controls the ajax loading display
  */
-angular.module('ng-commons', [])
+angular.module('ng-commons.loading', [])
 
 .directive("ngcLoading", ["$modal",
     function($modal){

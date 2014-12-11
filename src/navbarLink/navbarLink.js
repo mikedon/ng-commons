@@ -1,4 +1,4 @@
-angular.module('ng-commons',[])
+angular.module('ng-commons.navbarLink',[])
 .directive('ngcNavbarLink', ["$location",
     function($location){
         return {

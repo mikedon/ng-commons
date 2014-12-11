@@ -1,4 +1,4 @@
-angular.module('ng-commons', [])
+angular.module('ng-commons.input', [])
 .directive("ngcInput", function(){
 	return {
 		restrict: "A",

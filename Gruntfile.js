@@ -45,11 +45,12 @@ module.exports = function(grunt){
     	},
  		html2js: {
         	options: {
-          		base: 'src'
+          		base: 'src',
+				module: 'ng-commons-tpls'
         	},
-			main : {
+			tpls : {
         		src: [ '<%= app_files.tpl %>' ],
-        		dest: '<%= build_dir %>/templates-ng-commons.js'
+        		dest: 'ng-commons-tpls.js'
 			}
       	},
 		copy: {
@@ -81,7 +82,7 @@ module.exports = function(grunt){
         		dir: '<%= build_dir %>',
         		src: [ 
           			'<%= test_files.js %>',
-          			'<%= html2js.main.dest %>'
+          			'<%= html2js.tpls.dest %>'
         		]
       		}
 		}
@@ -111,17 +112,16 @@ module.exports = function(grunt){
    * compiled as grunt templates for use by Karma. Yay!
    */
 	grunt.registerMultiTask('karmaconfig', 'Process karma config templates', function(){
-	grunt.verbose.write("hello");
-    var jsFiles = filterForJS(this.filesSrc);
-	grunt.verbose.write(jsFiles);
-    grunt.file.copy('karma/karma-unit.tpl.js', grunt.config('build_dir') + '/karma-unit.js', { 
-      process: function(contents, path){
-        return grunt.template.process(contents, {
-          data: {
-            scripts: jsFiles
-          }
-        });
-      }
-    });
-  });
+    	var jsFiles = filterForJS(this.filesSrc);
+		grunt.verbose.write(jsFiles);
+    	grunt.file.copy('karma/karma-unit.tpl.js', grunt.config('build_dir') + '/karma-unit.js', { 
+      		process: function(contents, path){
+        		return grunt.template.process(contents, {
+					data: {
+						scripts: jsFiles
+				  	}
+        		});
+      		}
+    	});
+  	});
 };
