@@ -18,6 +18,7 @@ module.exports = function(grunt){
 		test_files: {
     		js: [
 				'bower_components/angular/angular.js',
+				'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       			'bower_components/angular-mocks/angular-mocks.js'
     		]
   		},

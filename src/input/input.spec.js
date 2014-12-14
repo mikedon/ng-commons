@@ -1,5 +1,3 @@
-
-
 describe("directive: input",  function() {
     var element, scope, isolateScope, $compile;
 

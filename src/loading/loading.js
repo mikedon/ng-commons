@@ -10,15 +10,14 @@ angular.module('ng-commons.loading', [])
                 image: "@"
             },
             link: function(scope, element, attrs){
-                var modalInstance;
                 //this is a dummy controller because $modal needs it
                 var ModalInstanceCtrl = function ($scope, $modalInstance) {
                 };
                 scope.$watch('loadingView', function(loadingView){
-                    if(loadingView === false && modalInstance){
-                        modalInstance.close();
+                    if(loadingView === false && scope.modalInstance){
+                        scope.modalInstance.close();
                     }else if(loadingView === true){
-                        modalInstance = $modal.open({
+                        scope.modalInstance = $modal.open({
                             template: attrs.image,
                             controller: ModalInstanceCtrl,
                             windowClass: "loading",
