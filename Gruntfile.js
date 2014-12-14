@@ -52,7 +52,7 @@ module.exports = function(grunt){
         	},
 			tpls : {
         		src: [ '<%= app_files.tpl %>' ],
-        		dest: 'ng-commons-tpls.js'
+        		dest: '<%= build_dir %>/ng-commons-tpls.js'
 			}
       	},
 		copy: {
