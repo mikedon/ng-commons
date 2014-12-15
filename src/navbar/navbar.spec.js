@@ -6,7 +6,7 @@ describe("directive: navbar", function(){
     	scope = $rootScope;
 		$compile = _$compile_;
 
-		var loadingHtml = 
+		var navbarHtml = 
         	'<ngc-navbar brand="TestApp" brand-img="assets/img/icon.png">' +
 			'<li>' +
             '	<button class="btn btn-default btn-primary">' +
@@ -14,7 +14,7 @@ describe("directive: navbar", function(){
             '	</button>' +
             '</li>';
 
-		element = angular.element(loadingHtml);
+		element = angular.element(navbarHtml);
 		element = $compile(element)(scope);
 		scope.$digest();
 	}));
