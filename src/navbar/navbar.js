@@ -11,9 +11,10 @@ angular.module('ng-commons.navbar',[])
        link: function(scope, element, attrs){
            scope.$parent.$on('$routeChangeSuccess', function(){
                 //collapses navbar when the route changes
-                var isOpen = element.find('div.in').length === 0 ? false : true;
+                var isOpen = element[0].querySelectorAll("div.in").length === 0 ? false : true;
                 if(isOpen){
-                    element.find('div.navbar-header > button').click();
+					var headerButton = element[0].querySelectorAll("div.navbar-header > button");
+					headerButton[0].click();
                 }
            });
        },

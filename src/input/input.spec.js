@@ -2,7 +2,6 @@ describe("directive: input",  function() {
     var element, scope, isolateScope, $compile;
 
     beforeEach(module('ng-commons'));
-    beforeEach(module('input/input.tpl.html'));
     beforeEach(inject(function(_$compile_, $rootScope) {
     	scope = $rootScope;
 		$compile = _$compile_;
