@@ -129,13 +129,13 @@ angular.module('ng-commons.User', []).provider('User', function(){
 					return d.promise;
 				},
 				login : function(redirect){
-					VoodieResource.clearAlerts();
+					BaseResource.clearAlerts();
 					var that = this;
 					var payload = 'j_username=' + this.username + '&j_password=' + this.password;
 					var config = {
 						headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
 					};
-					VoodieResource.post(authenticationUrl + 'j_spring_security_check', payload, config,
+					BaseResource.post(authenticationUrl + 'j_spring_security_check', payload, config,
 						function(){
 							that.password = '';
 							that.loggedIn = true;

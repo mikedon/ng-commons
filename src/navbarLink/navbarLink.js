@@ -5,6 +5,7 @@ angular.module('ng-commons.navbarLink',[])
             restrict: "E",
             replace: true,
             scope: {
+				linkClass: "@",
                 label: "@",
                 href: "@",
                 show: "&",
