@@ -100,7 +100,7 @@ angular.module('ng-commons.resources', [])
         		},
         		remove : function (resource, model) {
 					beforeCall();
-          			var promise = data.remove(resource, model).$promise;
+          			var promise = api[resource].remove(resource, model).$promise;
 					return wrapPromise(promise);
         		}
       		};
