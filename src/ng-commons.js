@@ -109,9 +109,9 @@ angular.module('ng-commons.resources', [])
 	};
 });
 
-
 //TODO - refactor User service to not use BaseResource
-angular.module('ng-commons.BaseResource',[]).provider('BaseResource', function(){
+angular.module('ng-commons.BaseResource',[])
+.provider('BaseResource', function(){
 	return {
 		$get: ['$resource', '$http', '$rootScope', function($resource, $http, $rootScope){
     		var addAlerts = function(alerts){
@@ -186,7 +186,8 @@ angular.module('ng-commons.BaseResource',[]).provider('BaseResource', function()
 	};
 });
 
-angular.module('ng-commons.User', []).provider('User', function(){
+angular.module('ng-commons.User', [])
+.provider('User', function(){
 	return {
 		$get : ['$resource', 'BaseResource', '$http', '$location', '$rootScope', '$q', 'authenticationUrl', 'apiUrl', function($resource, BaseResource, $http, $location, $rootScope, $q, authenticationUrl, apiUrl){
 			return {
