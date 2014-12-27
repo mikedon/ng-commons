@@ -1,7 +1,6 @@
 angular.module('ng-commons', [
 		'ui.bootstrap', 
 		'ng-commons.resources', 
-		'ng-commons.BaseResource', 
 		'ng-commons.User', 
 		'ng-commons-tpls', 
 		'ng-commons.input', 
@@ -189,7 +188,7 @@ angular.module('ng-commons.BaseResource',[])
 angular.module('ng-commons.User', [])
 .provider('User', function(){
 	return {
-		$get : ['$resource', 'BaseResource', '$http', '$location', '$rootScope', '$q', 'authenticationUrl', 'apiUrl', function($resource, BaseResource, $http, $location, $rootScope, $q, authenticationUrl, apiUrl){
+		$get : ['$resource', '$http', '$location', '$rootScope', '$q', 'authenticationUrl', 'apiUrl', function($resource, $http, $location, $rootScope, $q, authenticationUrl, apiUrl){
 			return {
 				initialized : false,
 				loggedIn : false,
@@ -241,13 +240,12 @@ angular.module('ng-commons.User', [])
 					return d.promise;
 				},
 				login : function(redirect){
-					BaseResource.clearAlerts();
 					var that = this;
 					var payload = 'j_username=' + this.username + '&j_password=' + this.password;
 					var config = {
 						headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
 					};
-					BaseResource.post(authenticationUrl + 'j_spring_security_check', payload, config,
+					$http.post(authenticationUrl + 'j_spring_security_check', payload, config,
 						function(){
 							that.password = '';
 							that.loggedIn = true;
