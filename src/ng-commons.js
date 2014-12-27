@@ -168,16 +168,16 @@ angular.module('ng-commons.User', [])
 					var config = {
 						headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
 					};
-					$http.post(authenticationUrl + 'j_spring_security_check', payload, config,
-						function(){
+					$http.post(authenticationUrl + 'j_spring_security_check', payload, config)
+						.success(function(){
 							that.password = '';
 							that.loggedIn = true;
 							$location.path(redirect);
-						},
+						})
+						.error(
 						function(){
 							that.reset();
-						}
-					);
+						});
 				},
 				logout : function(redirect){
 					this.reset();
