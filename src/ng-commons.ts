@@ -1,4 +1,8 @@
-angular.module('ng-commons', [
+/// <reference path="_all.ts"/>
+
+module ngCommons {
+	'use strict';
+	var ngCommons = angular.module('ng-commons', [
 		'ui.bootstrap', 
 		'ng-commons.resources', 
 		'ng-commons.User', 
@@ -7,47 +11,117 @@ angular.module('ng-commons', [
 		'ng-commons.navbar', 
 		'ng-commons.navbarLink', 
 		'ng-commons.loading'
-]);
+	]);
 
-/*
- * http://www.objectpartners.com/2014/06/03/extending-angulars-resource-service-for-a-consistent-api/
- */
-angular.module('ng-commons.resources', [])
-.provider('api', function(){
-	return {
-		$get: ['$resource', function($resource){
-			var api = {
-      			defaultConfig : {id: '@id'},
-      			add : function (config) {
-        			var params, url;
-        			// If the add() function is called with a
+	class ApiServiceConfig {
+		params:any;
+		url:string;
+		id:string = "@id";
+		unnatural:boolean = false;
+	}
+
+	interface IApiService  {
+		add(config: ApiServiceConfig) : void;
+		add(config: string) : void
+		add(config) : void;
+	}
+
+	/*
+	 * http://www.objectpartners.com/2014/06/03/extending-angulars-resource-service-for-a-consistent-api/
+	 */
+	class ApiService  implements ng.IServiceProvider {
+		public $get($resource: angular.resource.IResourceService) : IApiService {
+			return {
+				public add: (config) => {
+					// If the add() function is called with a
         			// String, create the default configuration.
-        			if (angular.isString(config)) {
-          				var configObj = {
-            				resource: config,
-            				url: '/api/' + config
-          				};
-          				config = configObj;
-        			}
-        			// If the url follows the expected pattern, we can set cool defaults
-        			if (!config.unnatural) {
-          				var orig = angular.copy(api.defaultConfig);
-          				params = angular.extend(orig, config.params);
-          				url = config.url + '/:id';
-        			// otherwise we have to declare the entire configuration. 
-        			} else {
-          				params = config.params;
-          				url = config.url;
-        			}
-        			// If we supply a method configuration, use that instead of the default extra. 
-        			var methods = config.methods || api.extraMethods;
-        			api[config.resource] = $resource(url, params, methods);
-      			}
-    		};    
-    		return api;
-		}]
-	};
-})
+					if(typeof config == "string"){
+						var configObj = {
+        					resource: config,
+        					url: '/api/' + config
+      					};
+      					config = configObj;
+					}
+    				// If the url follows the expected pattern, we can set cool defaults
+    				if (!config.unnatural) {
+      					config.url += '/:id'; 
+    				} 
+    				// If we supply a method configuration, use that instead of the default extra. 
+    				//var methods = config.methods || this.extraMethods;
+    				this[config.resource] = $resource(config.url, config.params, config.methods);
+				}
+			}
+		}
+	}
+	angular.module('ng-commons.resources',[]).provider('api', ApiService);
+
+	interface IDataService {
+
+		query(resource: string, query: any): ng.IPromise<any>;
+		get(resource: string, query: any): ng.IPromise<any>;
+		save(resource: string, model: any): ng.IPromise<any>;
+		update(resource: string, model: any): ng.IPromise<any>;
+		remove(resource: string, model: any): ng.IPromise<any>;
+	}
+
+	class DataService implements ng.IServiceProvider {
+
+		constructor(private $rootScope: ng.IRootScopeService) {}
+
+		private addAlerts(alerts:any) : void { 
+			if(!alerts || alerts.length === 0){
+            	return;
+        	}
+        	if(!this.$rootScope.alerts){
+            	this.$rootScope.alerts = [];
+        	}
+        	this.$rootScope.alerts = this.$rootScope.alerts.concat(alerts);
+		}
+        		
+		private beforeCall() {
+			this.$rootScope.loadingView = true;
+		}
+
+		private afterCall() {
+			this.$rootScope.loadingView = false;
+		}
+		private wrapPromise(promise: ng.IPromise<any>) : ng.IPromise<any> {
+			promise.then(function(data){
+					this.afterCall();
+					this.addAlerts(data.alerts);
+				}, function(data){
+					this.afterCall();
+					this.addAlerts(data.alerts);
+				});
+				return promise;
+		}
+		query: (resource: string, query: any) : ng.IPromise<any> {
+					this.beforeCall();
+          			var promise = api[resource].query(query).$promise;  
+					return wrapPromise(promise);
+				}
+				get: (resource: string, query: any) : ng.IPromise<any> => {
+
+				} 
+				save: (resource: string, model: any) :ng.IPromise<any> => {
+
+				}
+				update(resource: string, model: any) : ng.IPromise<any> => {
+
+				}
+				remove(resource: string, model: any) : ng.IPromise<any> => {
+
+				}
+		public $get($rootScope: ng.IRootScopeService, api : IApiService) : IDataService {
+			return {
+				
+				
+			}
+		}
+	}
+
+
+
 .provider('data', function(){
 	return {
     	$get: ['$rootScope', 'api', function ($rootScope, api) {
