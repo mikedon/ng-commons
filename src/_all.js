@@ -3,4 +3,4 @@
 /// <reference path="../bower_components/DefinitelyTyped/angular-ui-bootstrap/angular-ui-bootstrap.d.ts" />
 /// <reference path="ng-commons.ts" />
 /// <reference path="services/ng-resources.ts" />
-/// <reference path="services/ng-user.ts" />
+/// <reference path="services/ng-user.ts" /> 
