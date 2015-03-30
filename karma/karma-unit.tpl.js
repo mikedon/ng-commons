@@ -11,7 +11,8 @@ module.exports = function ( karma ) {
     files: [
       <% scripts.forEach( function ( file ) { %>'<%= file %>',
       <% }); %>
-      'src/**/*.js'
+      'build/**/*.js',
+      'src/**/*.spec.js' 
     ],
     exclude: [
       'src/assets/**/*.js'

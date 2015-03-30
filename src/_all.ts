@@ -4,3 +4,6 @@
 /// <reference path="ng-commons.ts" />
 /// <reference path="services/ng-resources.ts" />
 /// <reference path="services/ng-user.ts" />
+/// <reference path="directives/navbar/navbar.ts"/>
+/// <reference path="directives/input/input.ts"/>
+/// <reference path="directives/loading/loading.ts"/>

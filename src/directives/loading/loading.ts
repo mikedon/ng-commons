@@ -1,15 +1,21 @@
+/// <reference path="../../_all.ts"/>
+
 /**
  * directive that controls the ajax loading display
  */
-angular.module('ng-commons.loading', [])
 
-.directive("ngcLoading", ["$modal",
-    function($modal){
+module ngCommonsLoading {
+    'use strict';
+    export interface LoadingScope extends ng.IScope {
+        image: string;
+        modalInstance: ng.ui.bootstrap.IModalServiceInstance;
+    } 
+    export function loading($modal: ng.ui.bootstrap.IModalService) : ng.IDirective {
         return {
-            scope: {
+             scope: {
                 image: "@"
             },
-            link: function(scope, element, attrs){
+            link: function(scope: LoadingScope, element: JQuery, attrs: any){
                 //this is a dummy controller because $modal needs it
                 var ModalInstanceCtrl = function ($scope, $modalInstance) {
                 };
@@ -27,6 +33,8 @@ angular.module('ng-commons.loading', [])
                     }
                 });
             }
-        };
+        }
     }
-]);
+    loading.$inject = ['$modal'];
+}
+angular.module('ng-commons.loading', []).directive("ngcLoading", ngCommonsLoading.loading);
