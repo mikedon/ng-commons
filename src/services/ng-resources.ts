@@ -18,7 +18,7 @@ module ngCommonsResource {
 	/*
 	 * http://www.objectpartners.com/2014/06/03/extending-angulars-resource-service-for-a-consistent-api/
 	 */
-	class ApiService  implements ng.IServiceProvider {
+	export class ApiService  implements ng.IServiceProvider {
 		public $get($resource: angular.resource.IResourceService) : IApiService {
 			return {
 				add(config) {
@@ -42,7 +42,6 @@ module ngCommonsResource {
 			}
 		}
 	}
-	angular.module('ng-commons.resources',[]).provider('api', ApiService);
 
 	interface IDataService {
 		query(resource: string, query: any): ng.IPromise<any>;
@@ -52,7 +51,7 @@ module ngCommonsResource {
 		remove(resource: string, model: any): ng.IPromise<any>;
 	}
 
-	class DataService implements ng.IServiceProvider {
+	export class DataService implements ng.IServiceProvider {
 
 		private $rootScope: ngCommons.NgCommonsRootScope;
 		private api: IApiService
@@ -117,5 +116,5 @@ module ngCommonsResource {
 			}
 		}
 	}
-    angular.module('ng-commons.resources',[]).provider('data', DataService);
 }
+angular.module('ng-commons.resources',[]).provider('data', ngCommonsResource.DataService).provider('api', ngCommonsResource.ApiService);

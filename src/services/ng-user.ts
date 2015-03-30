@@ -25,7 +25,7 @@ module ngCommonsUser {
 		logout(redirect:string): void;
 	}
 
-	class UserService implements ng.IServiceProvider {
+	export class UserService implements ng.IServiceProvider {
 		public $get($resource: angular.resource.IResourceService, 
 			$http: angular.IHttpService, 
 			$rootScope : ngCommons.NgCommonsRootScope,
@@ -95,3 +95,4 @@ module ngCommonsUser {
 		}
 	}
 }
+angular.module('ng-commons.User',[]).provider('User', ngCommonsUser.UserService);

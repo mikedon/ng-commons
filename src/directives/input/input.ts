@@ -64,7 +64,7 @@ module ngCommonsInput {
 
                 //TODO did the other types of validations fail?
             },
-            templateUrl: 'input/input.tpl.html'
+            templateUrl: 'directives/input/input.tpl.html'
         }
      }
 }

@@ -28,7 +28,7 @@ module ngCommonsNavbar {
                     }
                 });
             },
-            templateUrl: 'navbar/navbar.tpl.html'
+            templateUrl: 'directives/navbar/navbar.tpl.html'
         }
     }
 
@@ -67,12 +67,12 @@ module ngCommonsNavbar {
                     }
                 });
             },
-            templateUrl: 'navbarLink/navbarLink.tpl.html'
+            templateUrl: 'directives/navbar/navbarLink.tpl.html'
         };
     }
 
     navbarLink.$inject = ['$location'];    
 }
 
-angular.module('ng-commons.navbar',[]).directive("ngcNavbar", ngCommonsNavbar.navbar).directive("ngcNavbarLinkg", ngCommonsNavbar.navbarLink);
+angular.module('ng-commons.navbar',[]).directive("ngcNavbar", ngCommonsNavbar.navbar).directive("ngcNavbarLink", ngCommonsNavbar.navbarLink);
 
