@@ -114,7 +114,7 @@ module.exports = function(grunt){
 
     grunt.registerTask('default',['build','compile']);
     grunt.registerTask('build', ['clean', 'html2js', 'typescript', 'karmaconfig', 'karma:continuous' ]);
-    grunt.registerTask('compile', ['concat:compile_js', 'uglify']);
+    grunt.registerTask('compile', ['build', 'concat:compile_js', 'uglify']);
 
 	/**
    	* A utility function to get all app JavaScript sources.

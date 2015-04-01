@@ -39,7 +39,7 @@ describe("directive: input",  function() {
 	it("should display the required message", function(){
 		element = compileDirective(textInputHtml);
 		//simulate form submission
-		scope.testForm.submitted = true;
+		scope.testForm.$submitted = true;
 		scope.testForm.testName.$invalid = true;
 		scope.testForm.testName.$error.required = true;
 		scope.$apply();

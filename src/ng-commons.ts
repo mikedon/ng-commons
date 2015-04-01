@@ -13,7 +13,7 @@ module ngCommons {
 	]);
 
 	export enum AlertType {INFO, WARNING, ERROR, SUCCESS}
-		export class Alert {
+	export class Alert {
 		type:AlertType;
 		message:string;
 	}
@@ -21,5 +21,7 @@ module ngCommons {
 	export interface NgCommonsRootScope extends ng.IRootScopeService{
 		alerts:Alert[];
 		loadingView:boolean;
+		clearAlerts: boolean;
+		captureRedirect: string;
 	}
 }

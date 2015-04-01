@@ -18,7 +18,7 @@ module.exports = function ( karma ) {
       'src/assets/**/*.js'
     ],
     frameworks: [ 'jasmine' ],
-    plugins: [ 'karma-jasmine', 'karma-firefox-launcher'],
+    plugins: [ 'karma-jasmine', 'karma-chrome-launcher', 'karma-firefox-launcher'],
 
     /**
      * How to report, by default.
@@ -52,7 +52,7 @@ module.exports = function ( karma ) {
      * the aesthetic advantage of not launching a browser every time you save.
      */
     browsers: [
-      'Firefox'
+      'Chrome'
     ]
   });
 };

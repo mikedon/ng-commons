@@ -3,7 +3,7 @@
 module ngCommonsInput {
     'use srtict';
 
-     export interface InputScope extends ng.IScope {
+     export interface InputScope extends ng.IScope,ng.IAttributes {
         label : string;
         requiredMsg: string;
         validationMsg: string;
@@ -14,59 +14,58 @@ module ngCommonsInput {
         isRequiredError?: boolean;
      }
 
-     export function input() : ng.IDirective {
-        return {
-            restrict: "A",
-            require: "^form",
-            replace: false,
-            transclude: true,
-            scope: {
-                label: "@", // Gets the string contents of the `label` attribute.
-                requiredMsg: "@",
-                validationMsg: "@"
-            },
-            link: function(scope: InputScope, element: JQuery, attrs: any, formController: ng.INgModelController) {
-                var input = element.find("input") ? element.find("input") : element.find("select");
-                input.addClass('form-control');
-                // The <label> should have a `for` attribute that links it to the input.
-                // Get the `id` attribute from the input element
-                // and add it to the scope so our template can access it.
-                var id = input.attr("id");
+    export class InputDirective implements ng.IDirective {
+        public restrict:string = "A";
+        public require:string = "^form";
+        public replace:boolean = false;
+        public transclude:boolean = true;
+        public templateUrl:string = 'directives/input/input.tpl.html';
+        //private $scope:InputScope;
+        public scope = {
+            label: "@", // Gets the string contents of the `label` attribute.
+            requiredMsg: "@",
+            validationMsg: "@"
+        };
 
-                scope.showLabel = attrs.label !== undefined;
-                // change to forAttr because jslint doesn't like it
-                // something probably broke because of this
-                scope.forAttr = id;
+        public link($scope: InputScope, element: JQuery, attrs: InputScope, formController: ng.INgModelController){
+            //this.$scope = $scope;
+            var input:JQuery = element.find("input") ? element.find("input") : element.find("select");
+            input.addClass('form-control');
+            // The <label> should have a `for` attribute that links it to the input.
+            // Get the `id` attribute from the input element
+            // and add it to the scope so our template can access it.
+            var id:string = input.attr("id");
 
-                // Get the `name` attribute of the input
-                var inputName = input.attr("name");
-                // Build the scope expression that contains the validation status.
-                // e.g. "form.example.$invalid"
-                var errorExpression = [formController.$name, inputName, "$invalid"].join(".");
-                // Watch the parent scope, because current scope is isolated.
+            $scope.showLabel = attrs.label !== undefined;
+            // change to forAttr because jslint doesn't like it
+            // something probably broke because of this
+            $scope.forAttr = id;
 
-                //should we show errors at all?
-                var showErrorsExpression = [formController.$name, 'submitted'].join(".");
-                scope.$parent.$watch(showErrorsExpression, function(showErrors){
-                    scope.showErrors = showErrors;
-                });
+            var inputName:string = input.attr("name");
+        
+            //should we show errors at all?
+            var showErrorsExpression:string = [formController.$name, '$submitted'].join(".");
+            $scope.$parent.$watch(showErrorsExpression, (showErrors) => {
+                $scope.showErrors = showErrors;
+            });
 
-                //does this input have errors?
-                scope.$parent.$watch(errorExpression, function(isError) {
-                    scope.isError = isError;
-                });
+            //does this input have errors?
+            var errorExpression:string = [formController.$name, inputName, "$invalid"].join(".");
+            $scope.$parent.$watch(errorExpression, (isError) => {
+                $scope.isError = isError;
+            });
 
-                //did the required validation fail?
-                var requiredErrorExpression = [formController.$name, inputName, "$error", "required"].join(".");
-                scope.$parent.$watch(requiredErrorExpression, function(isRequiredError) {
-                    scope.isRequiredError = isRequiredError;
-                });
-
-                //TODO did the other types of validations fail?
-            },
-            templateUrl: 'directives/input/input.tpl.html'
+            //did the required validation fail?
+            var requiredErrorExpression = [formController.$name, inputName, "$error", "required"].join(".");
+            $scope.$parent.$watch(requiredErrorExpression, (isRequiredError) => {
+                $scope.isRequiredError = isRequiredError;
+            });
         }
-     }
+
+        public static factory(): ng.IDirectiveFactory {
+            return () => new InputDirective();
+        }
+    }
 }
 
-angular.module('ng-commons.input', []).directive("ngcInput", ngCommonsInput.input);
+angular.module('ng-commons.input', []).directive("ngcInput", ngCommonsInput.InputDirective.factory());

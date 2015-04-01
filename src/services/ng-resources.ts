@@ -9,7 +9,7 @@ module ngCommonsResource {
 		unnatural:boolean = false;
 	}
 
-	interface IApiService  {
+	export interface IApiService  {
 		add(config: ApiServiceConfig) : void;
 		add(config: string) : void
 		add(config) : void;
@@ -43,15 +43,15 @@ module ngCommonsResource {
 		}
 	}
 
-	interface IDataService {
-		query(resource: string, query: any): ng.IPromise<any>;
+	export interface IDataService {
+		query(resource: string, query?: any): ng.IPromise<any>;
 		get(resource: string, query: any): ng.IPromise<any>;
 		save(resource: string, model: any): ng.IPromise<any>;
 		update(resource: string, model: any): ng.IPromise<any>;
 		remove(resource: string, model: any): ng.IPromise<any>;
 	}
 
-	export class DataService implements ng.IServiceProvider {
+	export class DataService implements ng.IServiceProvider, IDataService {
 
 		private $rootScope: ngCommons.NgCommonsRootScope;
 		private api: IApiService
@@ -74,46 +74,50 @@ module ngCommonsResource {
 			this.$rootScope.loadingView = false;
 		}
 		private wrapPromise(promise: ng.IPromise<any>) : ng.IPromise<any> {
-			promise.then(function(data){
+			promise.then((data) => {
 					this.afterCall();
 					this.addAlerts(data.alerts);
-				}, function(data){
+				}, (data) => {
 					this.afterCall();
 					this.addAlerts(data.alerts);
 				});
 				return promise;
 		}
+
+		public query(resource: string, query?: any) : ng.IPromise<any> {
+			this.beforeCall();
+			var promise = this.api[resource].query(query).$promise;  
+			return this.wrapPromise(promise);
+		}
+
+		public get(resource: string, query: any) : ng.IPromise<any> {
+			this.beforeCall();
+			var promise = this.api[resource].get(query).$promise;
+			return this.wrapPromise(promise);
+		}
+
+		public save(resource: string, model: any) :ng.IPromise<any>{
+			this.beforeCall();
+			var promise = this.api[resource].save(model).$promise;
+			return this.wrapPromise(promise);
+		}
+
+		public update(resource: string, model: any) : ng.IPromise<any>{
+			this.beforeCall();
+			var promise = this.api[resource].update(model).$promise;
+			return this.wrapPromise(promise);
+		}
+
+		public remove(resource: string, model: any) : ng.IPromise<any>{
+			this.beforeCall();
+			var promise = this.api[resource].remove(resource, model).$promise;
+			return this.wrapPromise(promise);
+		}
 		
-		public $get($rootScope: ng.IRootScopeService, api : IApiService) : IDataService {
-
-			return {
-				query(resource: string, query: any) : ng.IPromise<any> {
-					this.beforeCall();
-					var promise = this.api[resource].query(query).$promise;  
-					return this.wrapPromise(promise);
-				},
-
-				get(resource: string, query: any) : ng.IPromise<any> {
-					this.beforeCall();
-					var promise = this.api[resource].get(query).$promise;
-					return this.wrapPromise(promise);
-				},
-				save(resource: string, model: any) :ng.IPromise<any>{
-					this.beforeCall();
-					var promise = this.api[resource].save(model).$promise;
-					return this.wrapPromise(promise);
-				},
-				update(resource: string, model: any) : ng.IPromise<any>{
-					this.beforeCall();
-					var promise = this.api[resource].update(model).$promise;
-					return this.wrapPromise(promise);
-				},
-				remove(resource: string, model: any) : ng.IPromise<any>{
-					this.beforeCall();
-					var promise = api[resource].remove(resource, model).$promise;
-					return this.wrapPromise(promise);
-				}
-			}
+		public $get($rootScope: ngCommons.NgCommonsRootScope, api : IApiService) : IDataService {
+			this.$rootScope = $rootScope;
+			this.api = api;
+			return this;
 		}
 	}
 }
