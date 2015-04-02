@@ -27,9 +27,16 @@ module ngCommonsInput {
             validationMsg: "@"
         };
 
-        public link($scope: InputScope, element: JQuery, attrs: InputScope, formController: ng.INgModelController){
-            //this.$scope = $scope;
-            var input:JQuery = element.find("input") ? element.find("input") : element.find("select");
+        link = ($scope: InputScope, element: JQuery, attrs: InputScope, formController: ng.INgModelController) => {
+            var input:JQuery;
+            if(this.isSelect(element)){
+                input = element.find("select");
+            }else if(this.isInput(element)){
+                input = element.find("input");
+            }else{
+                throw "Input Directive: unable to determine input type";
+            }
+
             input.addClass('form-control');
             // The <label> should have a `for` attribute that links it to the input.
             // Get the `id` attribute from the input element
@@ -60,6 +67,14 @@ module ngCommonsInput {
             $scope.$parent.$watch(requiredErrorExpression, (isRequiredError) => {
                 $scope.isRequiredError = isRequiredError;
             });
+        }
+
+        private isSelect(element:JQuery) : boolean {
+            return element.find('select').length > 0;
+        }
+
+        private isInput(element:JQuery) : boolean{
+            return element.find("input").length > 0;
         }
 
         public static factory(): ng.IDirectiveFactory {
