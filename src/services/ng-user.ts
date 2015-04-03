@@ -29,7 +29,7 @@ module ngCommonsUser {
 		public $get($resource: angular.resource.IResourceService, 
 			$http: angular.IHttpService, 
 			$rootScope : ngCommons.NgCommonsRootScope,
-			$location: ng.ILocationService, 
+			$state: ng.ui.IStateService, 
 			$q: ng.IQService, 
 			authenticationUrl:string, 
 			apiUrl:string) : IUserService {
@@ -67,7 +67,7 @@ module ngCommonsUser {
 					});
 					return d.promise;
 				},
-				login(redirect:string) {
+				login(state:string) {
 					// var that = this;
 					var payload = 'j_username=' + this.user.username + '&j_password=' + this.user.password;
 					var config = {
@@ -77,7 +77,7 @@ module ngCommonsUser {
 					.success(() => {
 						this.user.password = '';
 						this.loggedIn = true;
-						$location.path(redirect);
+						$state.go(state);
 						})
 					.error(
 						() => {
@@ -85,10 +85,10 @@ module ngCommonsUser {
 						}
 					);
 				},
-				logout(redirect:string) {
+				logout(state:string) {
 					this.reset();
 					$http.get(authenticationUrl + 'j_spring_security_logout').success((data:any) => {
-						$location.path(redirect);
+						$state.go(state);
 					});
 				}
 			}
