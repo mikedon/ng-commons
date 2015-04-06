@@ -78,12 +78,10 @@ module ngCommonsUser {
 						this.user.password = '';
 						this.loggedIn = true;
 						$state.go(state);
-						})
-					.error(
-						() => {
-							this.reset();
-						}
-					);
+					})
+					.error(() => {
+						this.reset();
+					});
 				},
 				logout(state:string) {
 					this.reset();
