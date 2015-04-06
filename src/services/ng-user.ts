@@ -7,7 +7,7 @@ module ngCommonsUser {
 		username: string;
 		firstName: string;
 		password: string;
-		roles: string[];
+		roles: string[] = [];
 	}
 
 	export interface IUser extends angular.resource.IResource<User> {

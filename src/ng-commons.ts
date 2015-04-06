@@ -13,9 +13,9 @@ module ngCommons {
 		'ng-commons.loading'
 	]);
 
-	export enum AlertType {INFO, WARNING, ERROR, SUCCESS}
+	export enum AlertType {info, warning, danger, success}
 	export class Alert {
-		type:AlertType;
+		type:string;
 		message:string;
 	}
 
@@ -23,6 +23,6 @@ module ngCommons {
 		alerts:Alert[];
 		loadingView:boolean;
 		clearAlerts: boolean;
-		captureRedirect: string;
+		captureRedirect: ng.ui.IState;
 	}
 }
