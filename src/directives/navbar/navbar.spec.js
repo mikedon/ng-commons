@@ -7,7 +7,7 @@ describe("directive: navbar", function(){
 		$compile = _$compile_;
 
 		var navbarHtml = 
-        	'<ngc-navbar brand="TestApp" brand-img="assets/img/icon.png">' +
+        	'<ngc-navbar brand="TestApp" brand-img="assets/img/icon.png" state="home">' +
 			'<li>' +
             '	<button class="btn btn-default btn-primary">' +
             '		<span class="glyphicon glyphicon-plus">Test Button</span>' +

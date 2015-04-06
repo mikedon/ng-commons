@@ -3,9 +3,10 @@
 module ngCommonsNavbar {
     'use strict';
 
-    export interface NavbarScope extends ng.IScope {
+    export interface NavbarScope extends ng.IScope, ng.IAttributes {
         brand: string;
         brandImg: string;
+        state: string;
     }
 
     export interface NavbarLinkScope extends ng.IScope {
@@ -25,10 +26,11 @@ module ngCommonsNavbar {
         public templateUrl:string = 'directives/navbar/navbar.tpl.html';
         public scope = {
             brand: "@",
-            brandImg: "@"
+            brandImg: "@",
+            state: "@"
         }
 
-        link = ($scope: NavbarScope, element: JQuery, attrs: ng.IAttributes) => {
+        link = ($scope: NavbarScope, element: JQuery, attrs: NavbarScope) => {
             $scope.$parent.$on('$routeChangeSuccess', function() {
                     //collapses navbar when the route changes
                     var isOpen: boolean = element[0].querySelectorAll("div.in").length === 0 ? false : true;
