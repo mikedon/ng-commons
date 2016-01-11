@@ -1,10 +1,13 @@
 {
     "compilerOptions": {
-        "out": "out.js",
-        "sourceMap": true,
-        "target": "es5"
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "outDir": "build",
+        "rootDir": ".",
+        "sourceMap": true
     },
-    "files": [
-        "src/_all.ts"
+    "exclude": [
+        "node_modules"
     ]
 }

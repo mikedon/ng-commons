@@ -1,5 +1,3 @@
-/// <reference path="../_all.ts"/>
-
 module ngCommonsResource {
 
 	class ApiServiceConfig {
@@ -33,9 +31,9 @@ module ngCommonsResource {
 					}
     				// If the url follows the expected pattern, we can set cool defaults
     				if (!config.unnatural) {
-      					config.url += '/:id'; 
-    				} 
-    				// If we supply a method configuration, use that instead of the default extra. 
+      					config.url += '/:id';
+    				}
+    				// If we supply a method configuration, use that instead of the default extra.
     				//var methods = config.methods || this.extraMethods;
     				this[config.resource] = $resource(config.url, config.params, config.methods);
 				}
@@ -56,7 +54,7 @@ module ngCommonsResource {
 		private $rootScope: ngCommons.NgCommonsRootScope;
 		private api: IApiService
 
-		private addAlerts(alerts:any) : void { 
+		private addAlerts(alerts:any) : void {
 			if(!alerts || alerts.length === 0){
             	return;
         	}
@@ -65,7 +63,7 @@ module ngCommonsResource {
         	}
         	this.$rootScope.alerts = this.$rootScope.alerts.concat(alerts);
 		}
-        		
+
 		private beforeCall() {
 			this.$rootScope.loadingView = true;
 		}
@@ -86,7 +84,7 @@ module ngCommonsResource {
 
 		public query(resource: string, query?: any) : ng.IPromise<any> {
 			this.beforeCall();
-			var promise = this.api[resource].query(query).$promise;  
+			var promise = this.api[resource].query(query).$promise;
 			return this.wrapPromise(promise);
 		}
 
@@ -113,7 +111,7 @@ module ngCommonsResource {
 			var promise = this.api[resource].remove(resource, model).$promise;
 			return this.wrapPromise(promise);
 		}
-		
+
 		public $get($rootScope: ngCommons.NgCommonsRootScope, api : IApiService) : IDataService {
 			this.$rootScope = $rootScope;
 			this.api = api;

@@ -1,5 +1,8 @@
 bower_components
 build
 node_modules
+dist
+typings
 .DS_Store
 .sublime-grunt.cache
+.tscache

@@ -1,5 +1,3 @@
-/// <reference path="../../_all.ts"/>
-
 module ngCommonsInput {
     'use srtict';
 
@@ -49,22 +47,22 @@ module ngCommonsInput {
             $scope.forAttr = id;
 
             var inputName:string = input.attr("name");
-        
+
             //should we show errors at all?
             var showErrorsExpression:string = [formController.$name, '$submitted'].join(".");
-            $scope.$parent.$watch(showErrorsExpression, (showErrors) => {
+            $scope.$parent.$watch(showErrorsExpression, (showErrors: boolean) => {
                 $scope.showErrors = showErrors;
             });
 
             //does this input have errors?
             var errorExpression:string = [formController.$name, inputName, "$invalid"].join(".");
-            $scope.$parent.$watch(errorExpression, (isError) => {
+            $scope.$parent.$watch(errorExpression, (isError: boolean) => {
                 $scope.isError = isError;
             });
 
             //did the required validation fail?
             var requiredErrorExpression = [formController.$name, inputName, "$error", "required"].join(".");
-            $scope.$parent.$watch(requiredErrorExpression, (isRequiredError) => {
+            $scope.$parent.$watch(requiredErrorExpression, (isRequiredError: boolean) => {
                 $scope.isRequiredError = isRequiredError;
             });
         }

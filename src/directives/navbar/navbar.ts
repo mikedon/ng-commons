@@ -1,5 +1,3 @@
-/// <reference path="../../_all.ts"/>
-
 module ngCommonsNavbar {
     'use strict';
 
@@ -41,10 +39,10 @@ module ngCommonsNavbar {
                     }
                 });
         }
-    
+
         public static factory(): ng.IDirectiveFactory {
             return () => new NavbarDirective;
-        }    
+        }
     }
 
     export class NavbarLinkDirective implements ng.IDirective {
@@ -80,8 +78,8 @@ module ngCommonsNavbar {
             var directive:ng.IDirectiveFactory = ($location: ng.ILocationService) => new NavbarLinkDirective($location);
             directive.$inject =['$location'];
             return directive;
-        }    
-    } 
+        }
+    }
 }
 
 angular.module('ng-commons.navbar',[]).directive("ngcNavbar", ngCommonsNavbar.NavbarDirective.factory()).directive("ngcNavbarLink", ngCommonsNavbar.NavbarLinkDirective.factory());

@@ -1,5 +1,3 @@
-/// <reference path="../_all.ts"/>
-
 module ngCommonsUser {
 
 	export class User {
@@ -11,12 +9,14 @@ module ngCommonsUser {
 	}
 
 	export interface IUser extends angular.resource.IResource<User> {
-		
+
 	}
 
 	export interface IUserService {
 		user: User;
 		reset(): void;
+        initialized: boolean;
+        loggedIn: boolean;
 		isInitialized(): boolean;
 		isLoggedIn(): boolean;
 		hasRole(role:string): boolean;
@@ -26,12 +26,12 @@ module ngCommonsUser {
 	}
 
 	export class UserService implements ng.IServiceProvider {
-		public $get($resource: angular.resource.IResourceService, 
-			$http: angular.IHttpService, 
+		public $get($resource: angular.resource.IResourceService,
+			$http: angular.IHttpService,
 			$rootScope : ngCommons.NgCommonsRootScope,
-			$state: ng.ui.IStateService, 
-			$q: ng.IQService, 
-			authenticationUrl:string, 
+			$state: ng.ui.IStateService,
+			$q: ng.IQService,
+			authenticationUrl:string,
 			apiUrl:string) : IUserService {
 			return {
 				user: new User(),
@@ -70,9 +70,8 @@ module ngCommonsUser {
 				login(state:string) {
 					// var that = this;
 					var payload = 'j_username=' + this.user.username + '&j_password=' + this.user.password;
-					var config = {
-						headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-					};
+					var config = {};
+                    config['headers']["Content-Type"] = 'application/x-www-form-urlencoded; charset=UTF-8';
 					$http.post(authenticationUrl + 'j_spring_security_check', payload, config)
 					.success(() => {
 						this.user.password = '';

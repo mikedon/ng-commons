@@ -1,15 +1,13 @@
-/// <reference path="_all.ts"/>
-
 module ngCommons {
 	'use strict';
 	var ngCommons = angular.module('ng-commons', [
 		'ui.router',
-		'ui.bootstrap', 
-		'ng-commons.resources', 
-		'ng-commons.User', 
-		'ng-commons-tpls', 
-		'ng-commons.input', 
-		'ng-commons.navbar', 
+		'ui.bootstrap',
+		'ng-commons.resources',
+		'ng-commons.User',
+		'ng-commons-tpls',
+		'ng-commons.input',
+		'ng-commons.navbar',
 		'ng-commons.loading'
 	]);
 
