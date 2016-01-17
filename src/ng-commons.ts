@@ -1,6 +1,7 @@
 module ngCommons {
 	'use strict';
 	var ngCommons = angular.module('ng-commons', [
+        'ngResource',
 		'ui.router',
 		'ui.bootstrap',
 		'ng-commons.resources',

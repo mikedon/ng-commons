@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "angular": "^1.4.8",
+    "angular-resource": "^1.4.8",
     "angular-ui-bootstrap": "^1.0.0",
     "angular-ui-router": "^1.0.0-alpha0"
   },
@@ -27,5 +28,9 @@
     "karma-jasmine": "^0.3.2",
     "load-grunt-config": "^0.19.1",
     "typescript": "^1.7.5"
+  },
+  "typings": "dist/ng-commons.d.ts",
+  "typescript": {
+    "definition": "dist/ng-commons.d.ts"
   }
 }

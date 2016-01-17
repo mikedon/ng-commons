@@ -1,6 +1,6 @@
 module ngCommonsResource {
 
-	class ApiServiceConfig {
+	export class ApiServiceConfig {
 		params:any;
 		url:string;
 		id:string = "@id";
@@ -16,29 +16,31 @@ module ngCommonsResource {
 	/*
 	 * http://www.objectpartners.com/2014/06/03/extending-angulars-resource-service-for-a-consistent-api/
 	 */
-	export class ApiService  implements ng.IServiceProvider {
-		public $get($resource: angular.resource.IResourceService) : IApiService {
-			return {
-				add(config) {
-					// If the add() function is called with a
-        			// String, create the default configuration.
-					if(typeof config == "string"){
-						var configObj = {
-        					resource: config,
-        					url: '/api/' + config
-      					};
-      					config = configObj;
-					}
-    				// If the url follows the expected pattern, we can set cool defaults
-    				if (!config.unnatural) {
-      					config.url += '/:id';
-    				}
-    				// If we supply a method configuration, use that instead of the default extra.
-    				//var methods = config.methods || this.extraMethods;
-    				this[config.resource] = $resource(config.url, config.params, config.methods);
-				}
-			}
-		}
+	export class ApiService implements ng.IServiceProvider {        
+        private $resource: angular.resource.IResourceService;
+        
+        add(config){
+            // If the add() function is called with a
+            // String, create the default configuration.
+            if(typeof config == "string"){
+                var configObj = {
+                    resource: config,
+                    url: '/api/' + config
+                };
+                config = configObj;
+            }
+            // If the url follows the expected pattern, we can set cool defaults
+            if (!config.unnatural) {
+                config.url += '/:id';
+            }
+            // If we supply a method configuration, use that instead of the default extra.
+            //var methods = config.methods || this.extraMethods;
+            this[config.resource] = this.$resource(config.url, config.params, config.methods);
+        }
+        $get = ['$resource', ($resource: angular.resource.IResourceService) => {
+            this.$resource = $resource;
+            return this;
+        }]				
 	}
 
 	export interface IDataService {
@@ -112,11 +114,11 @@ module ngCommonsResource {
 			return this.wrapPromise(promise);
 		}
 
-		public $get($rootScope: ngCommons.NgCommonsRootScope, api : IApiService) : IDataService {
+		$get = ['$rootScope', 'api', ($rootScope: ngCommons.NgCommonsRootScope, api : IApiService) : IDataService => {
 			this.$rootScope = $rootScope;
 			this.api = api;
 			return this;
-		}
+		}]
 	}
 }
-angular.module('ng-commons.resources',[]).provider('data', ngCommonsResource.DataService).provider('api', ngCommonsResource.ApiService);
+angular.module('ng-commons.resources',['ngResource']).provider('data', ngCommonsResource.DataService).provider('api', ngCommonsResource.ApiService);

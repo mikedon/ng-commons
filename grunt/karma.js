@@ -8,6 +8,6 @@ module.exports = {
         singleRun: true
     },
     continuous: {
-        singleRun: true
+        singleRun: false
     }
 }
